@@ -9,7 +9,7 @@
 </h1>
 
 <p align="center">
-  <img src="docs/images/make-logo.png" alt="Makefile logo" width="142">
+  <img src="docs/images/make-logo.png?cache-bust=1" alt="Makefile logo" width="142">
 </p>
 
 # Overview
