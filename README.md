@@ -9,7 +9,7 @@
 </h1>
 
 <p align="center">
-  <img src="docs/images/make-logo-other.png" alt="Makefile logo" width="142">
+  <img src="docs/images/make-logo.png" alt="Makefile logo" width="142">
 </p>
 
 # Overview
@@ -93,7 +93,7 @@ LIBS_EXTERNAL    := public libraries. (e.g. minilibx)
 ```
 
 For the archive Makefile `Makefile.archive`, if you want to test archive functions you have to fill the TEST_FILES variable with your test file/s.
-This is very useful, because you'll be able to test your archive function leaks just by creating a test .c file containing main function and calling that function.
+This is very useful, because you'll be able to test your archive function leaks just by creating a test .c file containing main function and calling test functions.
 
 ```
 TEST_FILES      := test.c test2.c ...
@@ -231,6 +231,15 @@ Organize your root as follows:
 Notice that *objs/* is created in docker directory because objects are compiled inside docker container and kept separate from root/objs, in order to avoid relinking in docker rule.
 These object files (.o) are required because they are *ELF* binary files, essential for compiling in a Linux environment.
 Same applies for libft_docker.a and libft_io_docker.a that are libraries archives compiled inside docker contatiner
+
+## Common Errors
+
+If you are running valgrind docker and getting linking errors, you just need to run `make fclean-deep` in order to clean libraries objs/ directories and re run with valgrind.
+
+<p align="center">
+  <br><br>
+  <video src="docs/videos/docker_objs.mp4" alt="Docker objs fix" width="100" autoplay loop muted playsinline controls></video>
+</p>
 
 # Usage
 
