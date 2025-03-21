@@ -19,11 +19,11 @@ Indeed, the Makefile-Ultimate is a **C-based sophisticated development tool** wh
 
 Not only this Makefile simplifies project development by handling all the tedious setup and maintenance tasks, but it also helps you finding bugs in your code. From **memory management** to **segmentation faults** and so **much more**. It takes care of your code with detailed debugging information, making debugging easier and more efficient.
 
-The best part? You only need to write few lines, and your Makefile is ready!
+The best part? You only need to write few words, and your Makefile is ready!
 
 <p align="center">
   <br><br>
-  <img src="docs/gifs/makefile-demo.gif" alt="Makefile in action" width="600">
+  <img src="docs/gifs/makefile-demo.gif" alt="Makefile in action" width="800">
 </p>
 
 <br>
@@ -34,8 +34,9 @@ The best part? You only need to write few lines, and your Makefile is ready!
     <a href="#Quickstart">Quickstart</a> <br> ─── <br>
     <a href="#Configuration">Configuration</a> <br> ─── <br>
     <a href="#Usage">Usage</a> <br> ─── <br>
-    <a href="#Git Integration">Git Integration</a> <br> ─── <br>
-    <a href="#Examples">Examples</a>
+    <a href="#Git">Git</a> <br> ─── <br>
+    <a href="#Examples">Examples</a> <br> ─── <br>
+    <a href="#Contacts">Contacts</a>
   <br>
 </h3>
 
@@ -85,11 +86,12 @@ Input Project name and libraries (separated by space) used within your project
 
 ```
 # Project
-PROJECT          = your_project_name (e.g. push_swap)
+PROJECT          = your_project_name  (e.g. push_swap)
+PROJECT_BONUS    = your_project_bonus (e.g. checker)
 # Libraries
-LIBS_PRIVATE     := libraries that you made and are not used as submodule. (e.g. libft)
-LIBS_SUBMODULE   := libraries added as submodule. (e.g. libft)
-LIBS_EXTERNAL    := public libraries. (e.g. minilibx)
+LIBS_PRIVATE     := libraries that you made and are not used as submodule. (e.g. libft, libft_printf, ...)
+LIBS_SUBMODULE   := libraries added as submodule. (e.g. libft, libft_printf, ...)
+LIBS_EXTERNAL    := public libraries. (e.g. minilibx, ...)
 ```
 
 For the archive Makefile `Makefile.archive`, if you want to test archive functions you have to fill the TEST_FILES variable with your test file/s.
@@ -232,17 +234,6 @@ Notice that *objs/* is created in docker directory because objects are compiled 
 These object files (.o) are required because they are *ELF* binary files, essential for compiling in a Linux environment.
 Same applies for libft_docker.a and libft_io_docker.a that are libraries archives compiled inside docker contatiner
 
-## Common Errors
-
-If you are running valgrind docker and getting linking errors, you just need to run `make fclean-deep` in order to clean libraries objs/ directories and re run with valgrind.
-
-<p align="center">
-  <br><br>
-  <video src="docs/videos/docker_objs.mp4" alt="Docker objs fix" width="100" autoplay loop muted playsinline controls></video>
-</p>
-
-# Usage
-
 ## Commands
 
 ```bash
@@ -322,7 +313,24 @@ make clone_repos
 - ARGS=<"..."> - arguments for make commands that run the exe. For multiple arguments use: ARGS='"..." "..."'
 ```
 
-# Git Integration
+## Common Errors
+
+If you are running valgrind docker and getting:
+- linking errors
+- compilation errors
+
+You just need to run `make re-valgrind` which will:
+- clean libraries *objs/* directories (`make fclean-deep`)
+- automatically run make valgrind
+
+*See the video above for a real-time example.*
+<br>
+[▶️ Docker Objects Fix](docs/videos/docker_objs.mp4)
+
+# Usage
+
+
+# Git
 
 Makefile-Ultimate contains rules to streamline your Git workflow with safe operations that prevent common errors and data loss. These commands handle stashing changes automatically and provide clear, color feedback.
 
@@ -354,10 +362,36 @@ make reset-to-remote
 
 # Examples
 
+### Valgrind
 
+Thanks to `make process-valgrind-report`, fixing memory leaks and errors becomes easy and efficient, thanks to its concise and detailed summary.
+This rule is automatically triggered when you run:
+```
+make valgrind
+```
+You can also run it manually like this:
+```
+make process-valgrind-report REPORT_PATH=<fullpath>
+```
+*(Default path: `debug/valgrind_report.txt`)*
 
+[▶️ Valgrind Fix](docs/videos/valgrind_fix.mp4)
 
+### General debug
 
+`make debug` compiles your project with AddressSanitizer, UndefinedBehaviorSanitizer, and Signed Integer Overflow detection (`-fsanitize=address,undefined,signed-integer-overflow`).
+With these enabled, catching segmentation faults, undefined behavior, and subtle memory issues becomes fast and efficient — making debugging a breeze.
+While it doesn't offer the same deep memory tracking as Valgrind, it's significantly faster and still very powerful for most common issues.
 
+[▶️ Segmentation Fault fix](docs/videos/segfault_fix.mp4)
+
+# Contacts
+
+If you have questions, suggestions, or just want to connect:
+
+- Discord: @sabitos
+- X: [@savvysaba](https://x.com/savvysaba)
+- GitHub: [@SabaDevvy](https://github.com/SabaDevvy)
+- 42 User: gsabatin
 
 
