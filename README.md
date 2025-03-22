@@ -15,9 +15,9 @@
 # Overview
 What started as a simple Makefile for my first structured 42 project (*push_swap*) quickly evolved into much more. While working on the project, I realized that a well-structured build system was essential—not just for compiling code, but for streamlining the entire **development workflow**. I took this opportunity to learn some cool stuff and to create more than just a compilation script.
 
-Indeed, the Makefile-Ultimate is a **C-based development tool** which will support you especially during your 42 journey.
+Indeed, Makefile-Ultimate is a **C development tool** designed to support you especially during your 42 journey.
 
-Not only does this Makefile simplify project development by handling all the tedious setup and maintenance tasks, but it also helps you catch bugs in your code. Beyond clean library management and fully automated linking, parsing, and building, it provides debugging information that makes tracking down memory issues and segmentation faults easier and efficient.
+Not only does this Makefile simplify project development by handling all the tedious setup and maintenance tasks, but it also helps you catch bugs in your code. Beyond clean **library management** and fully automated linking, parsing, and **building**, it provides debug information that makes tracking down memory issues and segmentation faults easier and efficient.
 
 The best part? You only need to write your project name and your libraries, and your Makefile is ready!
 
