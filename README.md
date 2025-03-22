@@ -43,6 +43,7 @@ The best part? You only need to write your project name and your libraries, and 
 
 ## Features
 ```
+💨 Fast compilation          - Multithread compilation based on your CPU’s available cores
 🌈 Colorful output           - Color-coded messages for better readability
 🧪 Debug integration         - Built-in support for GDB, AddressSanitizer, and Valgrind
 🐳 Docker support            - Cross-platform Valgrind analysis through Docker
