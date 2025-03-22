@@ -15,7 +15,7 @@
 # Overview
 What started as a simple Makefile for my first structured 42 project (*push_swap*) quickly evolved into much more. While working on the project, I realized that a well-structured build system was essential—not just for compiling code, but for streamlining the entire **development workflow**. I took this opportunity to learn some cool stuff and to create more than just a compilation script.
 
-Indeed, the Makefile-Ultimate is a **C-based sophisticated development tool** which will support you especially during your 42 journey.
+Indeed, the Makefile-Ultimate is a **C-based development tool** which will support you especially during your 42 journey.
 
 Not only this Makefile simplifies project development by handling all the tedious setup and maintenance tasks, but it also helps you finding bugs in your code. From **memory management** to **segmentation faults** and so **much more**. It takes care of your code with detailed debugging information, making debugging easier and more efficient.
 
@@ -24,9 +24,9 @@ The best part? You only need to write few words, and your Makefile is ready!
 <p align="center">
   <br><br>
   <img src="docs/gifs/makefile-demo.gif" alt="Makefile in action" width="800">
+  <br><br>
 </p>
 
-<br>
 <h3 align="center">
     <em>INDEX</em>
     <br><br>
@@ -35,7 +35,7 @@ The best part? You only need to write few words, and your Makefile is ready!
     <a href="#Configuration">Configuration</a> <br> ─── <br>
     <a href="#Usage">Usage</a> <br> ─── <br>
     <a href="#Git">Git</a> <br> ─── <br>
-    <a href="#Examples">Examples</a> <br> ─── <br>
+    <a href="#Workflow">Workflow</a> <br> ─── <br>
     <a href="#Contacts">Contacts</a>
   <br>
 </h3>
@@ -94,8 +94,25 @@ LIBS_SUBMODULE   := libraries added as submodule. (e.g. libft, libft_printf, ...
 LIBS_EXTERNAL    := public libraries. (e.g. minilibx, ...)
 ```
 
-For the archive Makefile `Makefile.archive`, if you want to test archive functions you have to fill the TEST_FILES variable with your test file/s.
-This is very useful, because you'll be able to test your archive function leaks just by creating a test .c file containing main function and calling test functions.
+When implementing the bonus part, make sure to either manually specify `OBJS` and `OBJS_BONUS`, or use a Makefile formula to dynamically parse the sources. Considering that I had a lot of common src files, I structured it like this:
+```
+ALL_OBJS            := $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
+ALL_OBJS_DEBUG      := $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DEBUG_DIR)%.o)
+ALL_OBJS_DOCKER     := $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DOCKER_DIR)%.o)
+
+OBJS                := $(filter-out $(OBJS_DIR)main_bonus.o, $(ALL_OBJS))
+OBJS_DEBUG          := $(filter-out $(OBJS_DEBUG_DIR)main_bonus.o, $(ALL_OBJS_DEBUG))
+OBJS_DOCKER         := $(filter-out $(OBJS_DOCKER_DIR)main_bonus.o, $(ALL_OBJS_DOCKER))
+
+OBJS_BONUS          := $(filter-out $(OBJS_DIR)main_mandatory.o, $(ALL_OBJS))
+OBJS_DEBUG_BONUS    := $(filter-out $(OBJS_DEBUG_DIR)main_mandatory.o, $(ALL_OBJS_DEBUG))
+OBJS_DOCKER_BONUS   := $(filter-out $(OBJS_DOCKER_DIR)main_mandatory.o, $(ALL_OBJS_DOCKER))
+```
+
+**Note**: While automated source discovery is useful during development, it’s generally recommended to manually define `SRC` and `SRC_BONUS` with full paths in the final version for clarity and control.
+
+For the archive Makefile `Makefile.archive`, you can test archive functions by filling TEST_FILES variable with your test file/s.
+This is very useful, because you'll be able to test your archive functions leaks just by creating a test .c file containing main function and calling test functions.
 
 ```
 TEST_FILES      := test.c test2.c ...
@@ -234,12 +251,21 @@ Notice that *objs/* is created in docker directory because objects are compiled 
 These object files (.o) are required because they are *ELF* binary files, essential for compiling in a Linux environment.
 Same applies for libft_docker.a and libft_io_docker.a that are libraries archives compiled inside docker contatiner
 
+# Usage
+
 ## Commands
 
 ```bash
 # See all available commands and compile configurations
 make help
 ```
+
+<p align="center">
+  <img src="docs/images/make-help_1.png" alt="Help 1" width="800">
+</p>
+<p align="center">
+  <img src="docs/images/make-help_2.png" alt="Help 2" width="800">
+</p>
 
 ### Basic Commands
 
@@ -321,18 +347,17 @@ If you are running valgrind docker and getting:
 
 You just need to run `make re-valgrind` which will:
 - clean libraries *objs/* directories (`make fclean-deep`)
-- automatically run make valgrind
+- automatically run make valgrind (`make valgrind`)
 
-*See the video above for a real-time example.*
-<br>
-[▶️ Docker Objects Fix](docs/videos/docker_objs.mp4)
-
-# Usage
-
+<p align="center">
+  <br><br>
+  <img src="docs/gifs/docker_bug.gif" alt="Docker Bug" width="800">
+  <br><br>
+</p>
 
 # Git
 
-Makefile-Ultimate contains rules to streamline your Git workflow with safe operations that prevent common errors and data loss. These commands handle stashing changes automatically and provide clear, color feedback.
+Makefile-Ultimate contains Git rules to streamline your Git workflow with safe operations that prevent common errors and data loss. These commands handle stashing changes automatically and provide clear, color feedback.
 
 ```bash
 # Pull latest changes safely (auto-stashes and restores local changes)
@@ -360,9 +385,9 @@ make clean-all
 make reset-to-remote
 ```
 
-# Examples
+# Workflow
 
-### Valgrind
+## Valgrind
 
 Thanks to `make process-valgrind-report`, fixing memory leaks and errors becomes easy and efficient, thanks to its concise and detailed summary.
 This rule is automatically triggered when you run:
@@ -375,15 +400,33 @@ make process-valgrind-report REPORT_PATH=<fullpath>
 ```
 *(Default path: `debug/valgrind_report.txt`)*
 
-[▶️ Valgrind Fix](docs/videos/valgrind_fix.mp4)
+<p align="center">
+  <br><br>
+  <img src="docs/gifs/valgrind_fix.gif" alt="Valgrind Fix" width="800">
+  <br><br>
+</p>
 
-### General debug
+## General debug
 
 `make debug` compiles your project with AddressSanitizer, UndefinedBehaviorSanitizer, and Signed Integer Overflow detection (`-fsanitize=address,undefined,signed-integer-overflow`).
 With these enabled, catching segmentation faults, undefined behavior, and subtle memory issues becomes fast and efficient — making debugging a breeze.
 While it doesn't offer the same deep memory tracking as Valgrind, it's significantly faster and still very powerful for most common issues.
 
-[▶️ Segmentation Fault fix](docs/videos/segfault_fix.mp4)
+<p align="center">
+  <br><br>
+  <img src="docs/gifs/segmentationfault_fix.gif" alt="Valgrind Fix" width="800">
+  <br><br>
+</p>
+
+## Bonus
+
+To debug you bonus part, you simply need to append `BONUS=1` flag after your prompt.
+
+<p align="center">
+  <br><br>
+  <img src="docs/gifs/bonus_debug.gif" alt="Valgrind Fix" width="800">
+  <br><br>
+</p>
 
 # Contacts
 
