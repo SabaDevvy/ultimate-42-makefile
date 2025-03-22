@@ -303,6 +303,7 @@ make clone_repos
 ```
 - VERBOSE=1    - removes silent flag which will result in very detailed information printed in the terminal.
 - DETAILS=1    - prints compilation files and obj path.
+- BONUS=1      - debug compilations for bonus files
 - DEBUG=1      - actives source code in #ifdef DEBUG <...> endif blocks. Useful for debugging inside functions.
 - SLEEP=1      - (with docker valgrind) creates persistent container instead of destroying after use.
 - ARGS=<"..."> - arguments for make commands that run the exe. For multiple arguments use: ARGS='"..." "..."'
