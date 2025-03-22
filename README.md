@@ -370,7 +370,7 @@ You just need to run `make re-valgrind` which will:
 
 # Git
 
-Makefile-Ultimate contains Git rules to streamline your Git workflow with safe operations that prevent common errors and data loss. These commands handle stashing changes automatically and provide clear, color feedback.
+Makefile-Ultimate contains Git rules to streamline your Git workflow with safe operations that prevent common errors and data loss. These commands handle stashing changes automatically and provide clear feedback.
 
 ```bash
 # Pull latest changes safely (auto-stashes and restores local changes)
