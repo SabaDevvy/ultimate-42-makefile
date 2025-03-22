@@ -422,7 +422,7 @@ make process-valgrind-report REPORT_PATH=<fullpath>
 ## General debug
 
 `make debug` compiles your project with AddressSanitizer, UndefinedBehaviorSanitizer, and Signed Integer Overflow detection (`-fsanitize=address,undefined,signed-integer-overflow`).
-With these enabled, catching segmentation faults, undefined behavior, and subtle memory issues becomes fast and efficient — making debugging a breeze.
+With these enabled, catching segmentation faults, undefined behavior, and subtle memory issues becomes fast and efficient.
 While it doesn't offer the same deep memory tracking as Valgrind, it's significantly faster and still very powerful for most common issues.
 
 <p align="center">
