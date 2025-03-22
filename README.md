@@ -19,7 +19,7 @@ Indeed, the Makefile-Ultimate is a **C-based development tool** which will suppo
 
 Not only this Makefile simplifies project development by handling all the tedious setup and maintenance tasks, but it also helps you finding bugs in your code. From **memory management** to **segmentation faults** and so **much more**. It takes care of your code with detailed debugging information, making debugging easier and more efficient.
 
-The best part? You only need to write few words, and your Makefile is ready!
+The best part? You only need to write your project name and your libraries, and your Makefile is ready!
 
 <p align="center">
   <br><br>
@@ -94,7 +94,12 @@ LIBS_SUBMODULE   := libraries added as submodule. (e.g. libft, libft_printf, ...
 LIBS_EXTERNAL    := public libraries. (e.g. minilibx, ...)
 ```
 
-When implementing the bonus part, make sure to either manually specify `OBJS` and `OBJS_BONUS`, or use a Makefile formula to dynamically parse the sources. Considering that I had a lot of common src files, I structured it like this:
+**Note**: libraries archives must have the prefix lib and they have to march with directory name (e.g. *libraries/libft* and *libft.a*). In case libraries used compile with archive names not starting with lib (very unlikely), you need to manually modify `LIBS_LINKS` for all libraries.
+
+
+When implementing the bonus part, make sure to either manually specify `OBJS` and `OBJS_BONUS`, or use a Makefile formula to dynamically parse the sources. 
+<br>
+For example, considering that I had all src files for my push_swap mandatory and bonus part, I structured it like this:
 ```
 ALL_OBJS            := $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 ALL_OBJS_DEBUG      := $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DEBUG_DIR)%.o)
@@ -116,6 +121,14 @@ This is very useful, because you'll be able to test your archive functions leaks
 
 ```
 TEST_FILES      := test.c test2.c ...
+```
+
+In case you are using private libraries, you can input your user Github username in Git settings in order to enable `make clone-repos` rule.
+<br>
+**Note**: the rule works only if your library name matches your git repo name (e.g. 42 - libft won't work).
+
+```
+GITHUB_USER     := <...> #Github username
 ```
 
 ## Optimal setup
@@ -336,7 +349,7 @@ make clone_repos
 - DETAILS=1    - prints compilation files and obj path.
 - DEBUG=1      - actives source code in #ifdef DEBUG <...> endif blocks. Useful for debugging inside functions.
 - SLEEP=1      - (with docker valgrind) creates persistent container instead of destroying after use.
-- ARGS=<"..."> - arguments for make commands that run the exe. For multiple arguments use: ARGS='"..." "..."'
+- ARGS=<"..."> - arguments that will be passed to the exe once compiled for run commands (e.g. make valgrind). For multiple arguments use: ARGS='"..." "..."'
 ```
 
 ## Common Errors
@@ -424,7 +437,7 @@ To debug you bonus part, you simply need to append `BONUS=1` flag after your pro
 
 <p align="center">
   <br><br>
-  <img src="docs/gifs/bonus_debug.gif" alt="Valgrind Fix" width="800">
+  <img src="docs/gifs/bonus_setup.gif" alt="Valgrind Fix" width="800">
   <br><br>
 </p>
 
